@@ -8,13 +8,22 @@ class Program
     private const int TOUCHE = 2;
     private const int ARRET = 50;
     private const int PASSE_DECISIVE = 50;
-    private const int SAUVE_MIRACLE = 75;
+    private const int BONUS_SAUVE_MIRACLE = 25;
     private const int BUT = 100;
 
-    private static Dictionary<string, int> scores = new Dictionary<string, int>();
-    private static Dictionary<string, int> arrets = new Dictionary<string, int>();
-    private static Dictionary<string, int> decisives = new Dictionary<string, int>();
-    private static Dictionary<string, int> buts = new Dictionary<string, int>();
+    private class StatistiquesJoueur
+    {
+        public int NbTouche { get; set; }
+        public int NbCadre { get; set; }
+        public int NbArret { get; set; }
+        public int NbMiracle { get; set; }
+        public int NbDecisive { get; set; }
+        public int NbBut { get; set; }
+        public int ScoreArrets { get; set; }
+        public int ScoreTotal { get; set; }
+    }
+
+    private static Dictionary<string, StatistiquesJoueur> statistiquesJoueurs = new Dictionary<string, StatistiquesJoueur>();
 
     static void Main()
     {
@@ -24,27 +33,75 @@ class Program
 
     private static void SaisirDonneesJoueurs()
     {
-        while (true)
-        {
-            Console.WriteLine("Entrez le nom du joueur (ou appuyez sur Entrée pour terminer) : ");
-            string nomJoueur = Console.ReadLine();
-            if (string.IsNullOrEmpty(nomJoueur)) break;
+        int joueurCount = 0;
+        bool continuer = true;
 
-            int score = CalculerScoreJoueur(nomJoueur);
-            MettreAJourStatistiques(nomJoueur, score);
+        while (continuer)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                Console.WriteLine($"Entrez le nom du joueur {joueurCount + 1} : ");
+                string nomJoueur = Console.ReadLine();
+                if (string.IsNullOrEmpty(nomJoueur))
+                {
+                    continuer = false;
+                    break;
+                }
+
+                SaisirStatistiquesJoueur(nomJoueur);
+                joueurCount++;
+            }
+
+            if (continuer && joueurCount % 2 == 0)
+            {
+                Console.WriteLine("Voulez-vous ajouter d'autres joueurs ? (O/N)");
+                continuer = Console.ReadLine().Trim().ToUpper() == "O";
+            }
+        }
+
+        if (joueurCount % 2 != 0)
+        {
+            Console.WriteLine("Attention : Le nombre de joueurs est impair. Cela peut ne pas correspondre aux modes de jeu standard de Rocket League.");
         }
     }
 
-    private static int CalculerScoreJoueur(string nomJoueur)
+    private static void SaisirStatistiquesJoueur(string nomJoueur)
     {
-        int nbTouche = DemanderNombre($"Combien de fois {nomJoueur} a-t-il touché le ballon ?");
-        int nbCadre = DemanderNombre($"Combien de tirs cadrés {nomJoueur} a-t-il réalisés ?");
-        int nbArret = DemanderNombre($"Combien d'arrêts {nomJoueur} a-t-il réalisés ?");
-        int nbMiracle = DemanderNombre($"Combien de sauvetages miraculeux {nomJoueur} a-t-il réalisés ?");
-        int nbDecisive = DemanderNombre($"Combien de passes décisives {nomJoueur} a-t-il offertes ?");
-        int nbBut = DemanderNombre($"Combien de buts {nomJoueur} a-t-il marqués ?");
+        var stats = new StatistiquesJoueur
+        {
+            NbTouche = DemanderNombre($"Combien de fois {nomJoueur} a-t-il touché le ballon ?"),
+            NbCadre = DemanderNombre($"Combien de tirs cadrés {nomJoueur} a-t-il réalisés ?"),
+            NbArret = DemanderNombre($"Combien d'arrêts {nomJoueur} a-t-il réalisés ?"),
+            NbDecisive = DemanderNombre($"Combien de passes décisives {nomJoueur} a-t-il offertes ?"),
+            NbBut = DemanderNombre($"Combien de buts {nomJoueur} a-t-il marqués ?")
+        };
 
-        return CalculerScore(nbTouche, nbCadre, nbArret, nbMiracle, nbDecisive, nbBut);
+        Console.WriteLine($"Parmi les {stats.NbArret} arrêts, combien y avait-il de sauvetages miraculeux ?");
+        stats.NbMiracle = DemanderNombre("Nombre de sauvetages miraculeux : ");
+
+        while (stats.NbMiracle > stats.NbArret)
+        {
+            Console.WriteLine("Le nombre de sauvetages miraculeux ne peut pas être supérieur au nombre total d'arrêts.");
+            stats.NbMiracle = DemanderNombre("Nombre de sauvetages miraculeux : ");
+        }
+
+        stats.ScoreArrets = (stats.NbArret * ARRET) + (stats.NbMiracle * BONUS_SAUVE_MIRACLE);
+        stats.ScoreTotal = CalculerScore(stats);
+
+        if (!statistiquesJoueurs.ContainsKey(nomJoueur))
+            statistiquesJoueurs[nomJoueur] = stats;
+        else
+        {
+            var existingStats = statistiquesJoueurs[nomJoueur];
+            existingStats.NbTouche += stats.NbTouche;
+            existingStats.NbCadre += stats.NbCadre;
+            existingStats.NbArret += stats.NbArret;
+            existingStats.NbMiracle += stats.NbMiracle;
+            existingStats.NbDecisive += stats.NbDecisive;
+            existingStats.NbBut += stats.NbBut;
+            existingStats.ScoreArrets += stats.ScoreArrets;
+            existingStats.ScoreTotal += stats.ScoreTotal;
+        }
     }
 
     private static int DemanderNombre(string question)
@@ -53,39 +110,23 @@ class Program
         return int.Parse(Console.ReadLine());
     }
 
-    private static int CalculerScore(int nbTouche, int nbCadre, int nbArret, int nbMiracle, int nbDecisive, int nbBut)
+    private static int CalculerScore(StatistiquesJoueur stats)
     {
-        return (TOUCHE * nbTouche) + (CADRE * nbCadre) + (ARRET * nbArret) + 
-               (SAUVE_MIRACLE * nbMiracle) + (PASSE_DECISIVE * nbDecisive) + (BUT * nbBut);
-    }
-
-    private static void MettreAJourStatistiques(string nomJoueur, int score)
-    {
-        MettreAJourDictionnaire(scores, nomJoueur, score);
-        MettreAJourDictionnaire(arrets, nomJoueur, score / ARRET);
-        MettreAJourDictionnaire(decisives, nomJoueur, score / PASSE_DECISIVE);
-        MettreAJourDictionnaire(buts, nomJoueur, score / BUT);
-    }
-
-    private static void MettreAJourDictionnaire(Dictionary<string, int> dict, string cle, int valeur)
-    {
-        if (!dict.ContainsKey(cle))
-            dict[cle] = valeur;
-        else
-            dict[cle] += valeur;
+        return (TOUCHE * stats.NbTouche) + (CADRE * stats.NbCadre) + stats.ScoreArrets +
+               (PASSE_DECISIVE * stats.NbDecisive) + (BUT * stats.NbBut);
     }
 
     private static void AfficherResultats()
     {
-        AfficherMeilleurJoueur("Le meilleur joueur", scores);
-        AfficherMeilleurJoueur("Le meilleur buteur", buts);
-        AfficherMeilleurJoueur("Le meilleur passeur", decisives);
-        AfficherMeilleurJoueur("Le meilleur gardien", arrets);
+        AfficherMeilleurJoueur("Le meilleur joueur", j => j.ScoreTotal);
+        AfficherMeilleurJoueur("Le meilleur buteur", j => j.NbBut);
+        AfficherMeilleurJoueur("Le meilleur passeur", j => j.NbDecisive);
+        AfficherMeilleurJoueur("Le meilleur gardien", j => j.NbArret);
     }
 
-    private static void AfficherMeilleurJoueur(string titre, Dictionary<string, int> dict)
+    private static void AfficherMeilleurJoueur(string titre, Func<StatistiquesJoueur, int> critereFn)
     {
-        var meilleur = dict.OrderByDescending(x => x.Value).First();
-        Console.WriteLine($"{titre} est : {meilleur.Key} avec un score de {meilleur.Value}");
+        var meilleur = statistiquesJoueurs.OrderByDescending(kvp => critereFn(kvp.Value)).First();
+        Console.WriteLine($"{titre} est : {meilleur.Key} avec un score de {critereFn(meilleur.Value)}");
     }
 }
