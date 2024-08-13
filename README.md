@@ -33,7 +33,7 @@ RL Performance Tracker est une application C# qui permet de suivre et d'analyser
 
 ## Installation
 1. Clonez ce dépôt
-2. Ouvrez la solution dans Visual Studio
+2. Copiez le code dans votre projet sur Visual Studio
 3. Compilez et exécutez le programme
 
 ## Contribution
