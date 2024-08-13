@@ -27,8 +27,36 @@ class Program
 
     static void Main()
     {
+        Bienvenue();
         SaisirDonneesJoueurs();
         AfficherResultats();
+    }
+
+    private static void Bienvenue()
+    {
+        Console.WriteLine("Bienvenue sur RL Performance Tracker !");
+        Console.WriteLine();
+        Console.WriteLine("Ce programme vous permet d'analyser les performances des joueurs de Rocket League en détail.");
+        Console.WriteLine();
+        Console.WriteLine("Vous allez pouvoir saisir les statistiques des joueurs, incluant :");
+        Console.WriteLine("- Les touches de balle");
+        Console.WriteLine("- Les tirs cadrés");
+        Console.WriteLine("- Les arrêts et sauvetages miraculeux");
+        Console.WriteLine("- Les passes décisives");
+        Console.WriteLine("- Les buts");
+        Console.WriteLine();
+        Console.WriteLine("RL Performance Tracker calculera automatiquement les scores et déterminera :");
+        Console.WriteLine("- Le meilleur joueur global (l'homme du match)");
+        Console.WriteLine("- Le meilleur buteur");
+        Console.WriteLine("- Le meilleur passeur");
+        Console.WriteLine("- Le meilleur gardien");
+        Console.WriteLine();
+        Console.WriteLine("Préparez-vous à entrer dans l'univers des statistiques de Rocket League !");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Appuyez sur n'importe quelle touche pour démarrer");
+        Console.ReadKey();
+        Console.Clear();
     }
 
     private static void SaisirDonneesJoueurs()
