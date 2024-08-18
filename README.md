@@ -1,4 +1,4 @@
-# RL Performance Tracker
+# RL Performance Tracker (C#)
 
 ## Description
 RL Performance Tracker est une application C# qui permet de suivre et d'analyser les performances des joueurs dans Rocket League. Il calcule les scores en fonction de diverses actions de jeu et détermine les meilleurs joueurs dans différentes catégories.
