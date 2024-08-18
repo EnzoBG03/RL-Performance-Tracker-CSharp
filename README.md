@@ -45,5 +45,8 @@ Les contributions à ce projet sont les bienvenues. N'hésitez pas à forker le 
 - v1.1 : Réorganisation du code en fonctions
 - v1.0 : Version initiale
 
+## Précision
+RL Performance Tracker existe également en version React. Voici le lien du projet : https://github.com/EnzoBG03/RL-Performance-Tracker-React
+
 ## Auteur
 Enzo BENOIST-GIMET
