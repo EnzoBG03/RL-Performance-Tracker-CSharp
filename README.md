@@ -40,6 +40,7 @@ RL Performance Calculator est une application C# qui permet de suivre et d'analy
 Les contributions à ce projet sont les bienvenues. N'hésitez pas à forker le projet et à soumettre vos pull requests.
 
 ## Versions
+- v2.1.1 : Application du changement de nom du projet
 - v2.1 : Amélioration de l'expérience utilisateur grâce à l'ajout d'un message de bienvenue
 - v2.0 : Refonte majeure de la structure du code et ajout de nouvelles fonctionnalités
 - v1.1 : Réorganisation du code en fonctions
