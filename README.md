@@ -1,7 +1,7 @@
-# RL Performance Tracker (C#)
+# RL Performance Calculator (C#)
 
 ## Description
-RL Performance Tracker est une application C# qui permet de suivre et d'analyser les performances des joueurs dans Rocket League. Il calcule les scores en fonction de diverses actions de jeu et détermine les meilleurs joueurs dans différentes catégories.
+RL Performance Calculator est une application C# qui permet de suivre et d'analyser les performances des joueurs dans Rocket League. Il calcule les scores en fonction de diverses actions de jeu et détermine les meilleurs joueurs dans différentes catégories.
 
 ## Fonctionnalités
 - Saisie des statistiques de jeu pour plusieurs joueurs
@@ -11,8 +11,8 @@ RL Performance Tracker est une application C# qui permet de suivre et d'analyser
   - Meilleur buteur
   - Meilleur passeur
   - Meilleur gardien
-- Prise en compte spéciale des sauvetages miraculeux dans le calcul du score des gardiens (Nouvelle fonctionnalité)
-- Saisie des joueurs par paires pour correspondre aux différents modes de jeu (1v1, 2v2, 3v3 ou 4v4) (Nouvelle fonctionnalité)
+- Prise en compte spéciale des sauvetages miraculeux dans le calcul du score des gardiens
+- Saisie des joueurs par paires pour correspondre aux différents modes de jeu (1v1, 2v2, 3v3 ou 4v4)
 
 ## Comment utiliser
 1. Exécutez le programme
@@ -46,7 +46,7 @@ Les contributions à ce projet sont les bienvenues. N'hésitez pas à forker le 
 - v1.0 : Version initiale
 
 ## Précision
-RL Performance Tracker existe également en version React. Voici le lien du projet : https://github.com/EnzoBG03/RL-Performance-Tracker-React
+RL Performance Calculator existe également en version React. Voici le lien du projet : https://github.com/EnzoBG03/RL-Performance-Tracker-React
 
 ## Auteur
 Enzo BENOIST-GIMET
