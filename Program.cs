@@ -34,7 +34,7 @@ class Program
 
     private static void Bienvenue()
     {
-        Console.WriteLine("Bienvenue sur RL Performance Tracker !");
+        Console.WriteLine("Bienvenue sur RL Performance Calculator !");
         Console.WriteLine();
         Console.WriteLine("Ce programme vous permet d'analyser les performances des joueurs de Rocket League en détail.");
         Console.WriteLine();
@@ -45,7 +45,7 @@ class Program
         Console.WriteLine("- Les passes décisives");
         Console.WriteLine("- Les buts");
         Console.WriteLine();
-        Console.WriteLine("RL Performance Tracker calculera automatiquement les scores et déterminera :");
+        Console.WriteLine("RL Performance Calculator calculera automatiquement les scores et déterminera :");
         Console.WriteLine("- Le meilleur joueur global (l'homme du match)");
         Console.WriteLine("- Le meilleur buteur");
         Console.WriteLine("- Le meilleur passeur");
