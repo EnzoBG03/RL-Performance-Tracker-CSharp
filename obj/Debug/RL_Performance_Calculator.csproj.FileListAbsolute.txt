@@ -1,0 +1,15 @@
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\bin\Debug\RL_Performance_Tracker.exe.config
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\bin\Debug\RL_Performance_Tracker.exe
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\bin\Debug\RL_Performance_Tracker.pdb
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Calculator.csproj.AssemblyReference.cache
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Calculator.csproj.SuggestedBindingRedirects.cache
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\MainWindow.baml
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\MainWindow.g.cs
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\App.g.cs
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Tracker_MarkupCompile.cache
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Tracker.g.resources
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Tracker.Properties.Resources.resources
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Calculator.csproj.GenerateResource.cache
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Calculator.csproj.CoreCompileInputs.cache
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Tracker.exe
+C:\Users\enzob\OneDrive\Bureau\Programmation 2\Projets\RL_Performance_Tracker\obj\Debug\RL_Performance_Tracker.pdb

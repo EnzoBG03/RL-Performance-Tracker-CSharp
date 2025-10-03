@@ -1,0 +1,309 @@
+﻿<Window x:Class="RL_Performance_Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RL Performance Calculator" Height="700" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Name="MainWindowRoot">
+
+    <Window.Resources>
+        <!-- Ressources de thème sombre -->
+        <SolidColorBrush x:Key="DarkBackground" Color="#FF2C3E50"/>
+        <SolidColorBrush x:Key="DarkSecondary" Color="#FF34495E"/>
+        <SolidColorBrush x:Key="DarkAccent" Color="#FF3498DB"/>
+        <SolidColorBrush x:Key="DarkAccentHover" Color="#FF2980B9"/>
+        <SolidColorBrush x:Key="DarkText" Color="White"/>
+        <SolidColorBrush x:Key="DarkBorder" Color="#FF3498DB"/>
+
+        <!-- Animations -->
+        <Storyboard x:Key="FadeInAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideInFromRight">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" 
+                           From="50" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4"/>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideInFromLeft">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" 
+                           From="-50" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4"/>
+        </Storyboard>
+
+        <!-- Styles adaptatifs pour les boutons (sans animation de survol) -->
+        <Style TargetType="Button" x:Key="AdaptiveButton">
+            <Setter Property="Background" Value="#FF3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF2980B9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Styles par défaut avec thème dynamique -->
+        <Style TargetType="Button" BasedOn="{StaticResource AdaptiveButton}"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#FF2C3E50"/>
+            <Setter Property="BorderBrush" Value="#FF3498DB"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style TargetType="GroupBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF3498DB"/>
+        </Style>
+
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="#FF34495E"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="#FF34495E"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#FF2C3E50">
+        <TabControl Name="MainTabControl" Background="#FF34495E">
+
+            <!-- Onglet Bienvenue -->
+            <TabItem Header="Bienvenue" Name="WelcomeTab">
+                <Grid Margin="20">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Name="WelcomePanel">
+                        <StackPanel.RenderTransform>
+                            <TranslateTransform/>
+                        </StackPanel.RenderTransform>
+                        <TextBlock Text="Bienvenue sur RL Performance Calculator !" 
+                                       FontSize="24" FontWeight="Bold" 
+                                       HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                        <TextBlock Text="Cette application vous permet d'analyser les performances des joueurs de Rocket League en détail." 
+                                       FontSize="14" TextWrapping="Wrap" 
+                                       HorizontalAlignment="Center" Margin="0,10"/>
+
+                        <TextBlock FontSize="12" Margin="0,20,0,0" HorizontalAlignment="Left">
+                                <Run Text="Vous allez pouvoir saisir les statistiques des joueurs, incluant :"/><LineBreak/>
+                                <Run Text="• Les touches de balle"/><LineBreak/>
+                                <Run Text="• Les tirs cadrés"/><LineBreak/>
+                                <Run Text="• Les arrêts et sauvetages miraculeux"/><LineBreak/>
+                                <Run Text="• Les passes décisives"/><LineBreak/>
+                                <Run Text="• Les buts"/>
+                        </TextBlock>
+
+                        <TextBlock FontSize="12" Margin="0,20,0,0" HorizontalAlignment="Left">
+                                <Run Text="RL Performance Calculator calculera automatiquement les scores et déterminera :"/><LineBreak/>
+                                <Run Text="• Le meilleur joueur global (l'homme du match)"/><LineBreak/>
+                                <Run Text="• Le meilleur buteur"/><LineBreak/>
+                                <Run Text="• Le meilleur passeur"/><LineBreak/>
+                                <Run Text="• Le meilleur gardien"/>
+                        </TextBlock>
+
+                        <Button Content="Commencer la saisie" 
+                                    Click="CommencerSaisie_Click" 
+                                    FontSize="16" Margin="0,30,0,0"
+                                    Padding="20,10"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- Onglet Saisie des données -->
+            <TabItem Header="Saisie des joueurs" Name="InputTab" IsEnabled="False">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Formulaire de saisie -->
+                    <GroupBox Header="Ajouter un joueur" Grid.Column="0" Margin="10" 
+                                  Name="FormulaireGroup"
+                                  RenderTransformOrigin="0.5,0.5">
+                        <GroupBox.RenderTransform>
+                            <TranslateTransform/>
+                        </GroupBox.RenderTransform>
+                        <StackPanel Margin="10">
+                            <Label Content="Nom du joueur :"/>
+                            <TextBox Name="NomJoueurTextBox" />
+
+                            <Label Content="Nombre de touches :"/>
+                            <TextBox Name="TouchesTextBox" Text="0"/>
+
+                            <Label Content="Tirs cadrés :"/>
+                            <TextBox Name="CadresTextBox" Text="0"/>
+
+                            <Label Content="Arrêts :"/>
+                            <TextBox Name="ArretsTextBox" Text="0"/>
+
+                            <Label Content="Sauvetages miraculeux :"/>
+                            <TextBox Name="MiraclesTextBox" Text="0"/>
+
+                            <Label Content="Passes décisives :"/>
+                            <TextBox Name="PassesTextBox" Text="0"/>
+
+                            <Label Content="Buts :"/>
+                            <TextBox Name="ButsTextBox" Text="0"/>
+
+                            <Button Content="Ajouter le joueur" 
+                                        Click="AjouterJoueur_Click" 
+                                        Margin="0,20,0,0"/>
+
+                            <TextBlock Name="MessageTextBlock" 
+                                           Foreground="#FFE74C3C" 
+                                           TextWrapping="Wrap" 
+                                           Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Liste des joueurs ajoutés -->
+                    <GroupBox Header="Joueurs ajoutés" Grid.Column="1" Margin="10" 
+                                  Name="ListeGroup"
+                                  RenderTransformOrigin="0.5,0.5">
+                        <GroupBox.RenderTransform>
+                            <TranslateTransform/>
+                        </GroupBox.RenderTransform>
+                        <StackPanel>
+                            <ListView Name="JoueursListView" 
+                                          Height="400" 
+                                          Margin="10">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Nom}" Width="100"/>
+                                        <GridViewColumn Header="Score" DisplayMemberBinding="{Binding ScoreTotal}" Width="60"/>
+                                        <GridViewColumn Header="Buts" DisplayMemberBinding="{Binding NbBut}" Width="50"/>
+                                        <GridViewColumn Header="Passes" DisplayMemberBinding="{Binding NbDecisive}" Width="60"/>
+                                        <GridViewColumn Header="Arrêts" DisplayMemberBinding="{Binding NbArret}" Width="60"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                            <Button Content="Voir les résultats" 
+                                        Name="VoirResultatsButton"
+                                        Click="VoirResultats_Click" 
+                                        IsEnabled="False"/>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Onglet Résultats -->
+            <TabItem Header="Résultats" Name="ResultsTab" IsEnabled="False">
+                <Grid Margin="20">
+                    <StackPanel Name="ResultatsPanel"
+                                   RenderTransformOrigin="0.5,0.5">
+                        <StackPanel.RenderTransform>
+                            <TranslateTransform/>
+                        </StackPanel.RenderTransform>
+                        <TextBlock Text="Résultats de la partie" 
+                                       FontSize="20" FontWeight="Bold" 
+                                       HorizontalAlignment="Center" 
+                                       Margin="0,0,0,30"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="20">
+                                <GroupBox Header="🏆 Meilleurs joueurs" 
+                                              BorderBrush="#FFE67E22" Margin="0,0,0,20">
+                                    <StackPanel Margin="10">
+                                        <TextBlock Name="MeilleurJoueurText" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Name="MeilleurButeurText" Margin="0,10,0,0"/>
+                                        <TextBlock Name="MeilleurPasseurText" Margin="0,5,0,0"/>
+                                        <TextBlock Name="MeilleurGardienText" Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Header="📊 Classement général" 
+                                              BorderBrush="#FF9B59B6">
+                                    <ListView Name="StatistiquesDetailleesListView" 
+                                                  Height="200">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Joueur" DisplayMemberBinding="{Binding Nom}" Width="80"/>
+                                                <GridViewColumn Header="Touches" DisplayMemberBinding="{Binding NbTouche}" Width="70"/>
+                                                <GridViewColumn Header="Cadrés" DisplayMemberBinding="{Binding NbCadre}" Width="60"/>
+                                                <GridViewColumn Header="Buts" DisplayMemberBinding="{Binding NbBut}" Width="50"/>
+                                                <GridViewColumn Header="Passes" DisplayMemberBinding="{Binding NbDecisive}" Width="60"/>
+                                                <GridViewColumn Header="Arrêts" DisplayMemberBinding="{Binding NbArret}" Width="60"/>
+                                                <GridViewColumn Header="Score" DisplayMemberBinding="{Binding ScoreTotal}" Width="60"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </GroupBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="20">
+                                <GroupBox Header="⚽ Barème des points" 
+                                              BorderBrush="#FF27AE60">
+                                    <StackPanel Margin="10">
+                                        <TextBlock Text="• Touche de balle : 2 points"/>
+                                        <TextBlock Text="• Tir cadré : 10 points"/>
+                                        <TextBlock Text="• Arrêt : 50 points"/>
+                                        <TextBlock Text="• Sauvetage miraculeux : Arrêt + 25 points"/>
+                                        <TextBlock Text="• Passe décisive : 50 points"/>
+                                        <TextBlock Text="• But : 100 points"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <Button Content="Revenir à l'accueil" 
+                                            Click="RevenirAccueil_Click" 
+                                            Margin="0,20,0,0"
+                                            Background="#FFE67E22"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
